@@ -7,13 +7,13 @@ import time
 driver = webdriver.Chrome()
 
 # open a url link
-driver.get("https://www.google.com")
+driver.get("https://www.youtube.com/")
 
 # search a input text field
-search_box = driver.find_element(By.NAME, "q")
+search_box = driver.find_element(By.NAME, "search_query")
 
 # enter a text
-search_box.send_keys("Selenium Python")
+search_box.send_keys("CongTV")
 # submit
 search_box.submit()
 
@@ -23,7 +23,7 @@ search_box.submit()
 
 
 # delay
-time.sleep(15)
+time.sleep(5)
 print("Page title after search: ", driver.title)
 
 driver.quit()
