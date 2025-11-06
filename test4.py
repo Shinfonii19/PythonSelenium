@@ -16,7 +16,9 @@ wait = WebDriverWait(driver, 10)
 username_box = wait.until(
     EC.visibility_of_element_located((By.ID, "username")))
 password_box = driver.find_element(By.ID, "password")
-login_button = driver.find_element(By.CSS_SELECTOR, "button.radius")
+
+login_button = wait.until(EC.element_to_be_clickable(
+    (By.CSS_SELECTOR, "button.radius")))
 
 # Type and submit
 username_box.send_keys("tomsmith")
@@ -24,7 +26,8 @@ password_box.send_keys("SuperSecretPassword!")
 login_button.click()
 
 # Wait until success message appears
-wait.until(EC.visibility_of_element_located((By.ID, "flash")))
+wait.until(EC.text_to_be_present_in_element(
+    (By.ID, "flash"), "You logged into a secure area!"))
 
 print("Login test completed!")
 driver.quit()
