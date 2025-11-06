@@ -1,16 +1,30 @@
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 # setup a function for webdriver
 driver = webdriver.Chrome()
 
-# wait up to 10 secs
-driver.implicitly_wait(10)
-
 # open a link
-driver.get("https://google.com")
+driver.get("https://the-internet.herokuapp.com/login")
 
-# finding a element with a value of 'q' on the name (name = q)
-search_box = driver.find_element("name", "q")
+# wait up to 10 secs until its ready
+wait = WebDriverWait(driver, 10)
 
-# sending a keys, value or text
-search_box.send_keys("Selenium waits example")
+# Wait for username field
+username_box = wait.until(
+    EC.visibility_of_element_located((By.ID, "username")))
+password_box = driver.find_element(By.ID, "password")
+login_button = driver.find_element(By.CSS_SELECTOR, "button.radius")
+
+# Type and submit
+username_box.send_keys("tomsmith")
+password_box.send_keys("SuperSecretPassword!")
+login_button.click()
+
+# Wait until success message appears
+wait.until(EC.visibility_of_element_located((By.ID, "flash")))
+
+print("Login test completed!")
+driver.quit()
